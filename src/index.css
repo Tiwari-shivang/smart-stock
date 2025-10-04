@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+@import './styles/theme.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-inter);
+    font-size: var(--text-body);
+    line-height: 1.5;
+    color: var(--ss-text);
+    background-color: var(--ss-bg);
+    transition: background-color var(--transition-medium), color var(--transition-medium);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ss-text);
+  }
+
+  h1 { font-size: var(--text-h1); }
+  h2 { font-size: var(--text-h2); }
+  h3 { font-size: var(--text-h3); }
+
+  p {
+    color: var(--ss-text);
+    line-height: 1.5;
+  }
+
+  a {
+    color: var(--ss-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  a:hover {
+    color: var(--ss-blue);
+  }
+
+  /* Focus styles */
+  *:focus-visible {
+    outline: 2px solid var(--ss-primary);
+    outline-offset: 2px;
+  }
+
+  /* Selection */
+  ::selection {
+    background: var(--ss-primary);
+    color: white;
+  }
+}
+
+/* Component utilities */
+@layer components {
+  .container {
+    @apply max-w-screen-desktop mx-auto px-4 lg:px-6 desktop:px-16;
+  }
+
+  .panel {
+    background: var(--ss-panel);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-md);
+    transition: box-shadow var(--transition-fast);
+  }
+
+  .panel:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Buttons */
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 cursor-pointer inline-flex items-center justify-center gap-2;
+    font-family: var(--font-inter);
+  }
+
+  .btn-primary {
+    background: var(--ss-primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ss-text);
+    border: 1px solid var(--ss-line);
+  }
+
+  .btn-ghost:hover {
+    background: var(--ss-muted);
+  }
+
+  .btn-success {
+    background: var(--ss-green);
+    color: white;
+  }
+
+  .btn-danger {
+    background: var(--ss-red);
+    color: white;
+  }
+
+  .btn-info {
+    background: var(--ss-blue);
+    color: white;
+  }
+
+  /* Action chips */
+  .chip {
+    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium;
+    background: var(--ss-muted);
+    color: var(--ss-text);
+  }
+
+  .chip-restock {
+    background: var(--ss-green);
+    color: white;
+  }
+
+  .chip-replace {
+    background: var(--ss-red);
+    color: white;
+  }
+
+  .chip-promote {
+    background: var(--ss-blue);
+    color: white;
+  }
+
+  /* Grid system */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-4);
+  }
+
+  @media (max-width: 1023px) {
+    .dashboard-grid {
+      grid-template-columns: repeat(8, 1fr);
+    }
+  }
+
+  @media (max-width: 639px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Skeleton loader */
+  .skeleton {
+    @apply animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700;
+    background-size: 200% 100%;
+  }
+}
+
+/* Utilities */
+@layer utilities {
+  .text-display { font-size: var(--text-display); }
+  .text-h1 { font-size: var(--text-h1); }
+  .text-h2 { font-size: var(--text-h2); }
+  .text-h3 { font-size: var(--text-h3); }
+  .text-body { font-size: var(--text-body); }
+  .text-caption { font-size: var(--text-caption); }
+  
+  .hover-lift {
+    @apply transition-transform duration-200;
+  }
+  .hover-lift:hover {
+    @apply -translate-y-0.5;
+  }
+}

@@ -1,0 +1,25 @@
+🏷 SKU Catalog for Vietnam (by Category & Example SKUs)
+Category	Example SKUs / Items
+Beverages / Drinks	Bottled water (500 ml, 1 L), Sparkling water, Soft drinks / sodas (Coke, Pepsi, local brands), Energy drinks (Red Bull, Sting, local), Ready-to-drink tea (iced tea, green tea), Coffee drinks (cold brew, canned coffee, instant sachets), Fruit juices & nectars, Milk drinks (flavoured milk, yogurt drinks), Flavored milk teas, Sports drinks / electrolyte beverages, Coconut water, Cold brew coffee bottles
+Snacks & Confectionery	Potato chips, corn chips, tortilla chips, Cassava chips, prawn crackers, shrimp chips, nuts (peanuts, cashew), dried fruits, candy / sweets / lollipops, chocolates, chocolate bars, wafer biscuits, cookies / biscuits, gums / mints, local snacks (rice crackers, seaweed snacks, shrimp-flavored strips), snack packs / multipacks
+Instant / Ready-to-Eat Food	Instant noodles (cup & packet), instant soup, ramen, pho instant packs, microwave meals / ready meals, rice meals, congee / porridge cups, sandwiches / wraps, onigiri / rice balls, sushi packs, salads, hot dogs, buns / bao, pastries / bread, heated food items (if store supports)
+Dairy & Frozen	Yogurt cups, flavored yogurts, ice cream / ice cream bars, frozen desserts, frozen dumplings, frozen meals, popsicles / ice pops, frozen vegetables / peas mix, frozen seafood / fish sticks (if applicable)
+Grocery / Staples / Cooking Essentials	Rice (small packs), noodles / pasta, cooking oil (small bottles), sauces & condiments (soy sauce, fish sauce, chili sauce, ketchup), canned goods (tuna, sardine, canned vegetables), canned fruits, salted eggs, eggs (if shelf-permitted), dry goods (beans, lentils), spices & seasonings, salt / sugar / flour / baking powder, instant coffee / tea sachets, powdered milk, soup bases / stocks, dried seaweed, dried mushrooms
+Health / Personal Care	Toothpaste, toothbrush, dental floss, soap bars / body wash, shampoo / conditioner small packs, facial cleanser, wet wipes, tissues / facial tissues, sanitary pads, tampons, condoms, hand sanitizer, deodorant, razors / blades, shaving cream, hair spray, hair oil, combs / brushes, lotion / moisturizer, lip balm, masks (face masks)
+Household / Cleaning	Laundry detergent (small packs), dishwashing liquid, multipurpose cleaner spray, toilet cleaner, trash bags, paper towels / napkins, tissue paper rolls, air fresheners, insect repellents, mosquito coils, cleaning cloths / sponges, bathroom cleaner
+Tobacco / Smoking Accessories	Cigarettes, rolling tobacco (if legal), lighters, matches
+Magazines / News / Stationery	Newspapers, magazines, notebooks, pens / pencils, sticky notes, memo pads, postcards, greeting cards
+Electronics / Accessories	Phone chargers (USB, micro-USB, Type C), USB cables, power banks (small), earphones / earbuds, batteries (AA, AAA, coin cells), phone screen cleaner, small accessories (SIM ejector, memory card)
+Seasonal / Novelty / Apparel	Umbrellas, caps / hats, T-shirts (especially for events), seasonal items (festive lanterns, decorations), cooling towels, sunglasses, gloves, scarves (depending on region), promotional cups / bottles, souvenir items
+Miscellaneous / Services	Lottery tickets, prepaid mobile top-up / airtime, gift cards, scratch cards, SIM cards, public transit top-up, service kiosks (bill payment, tickets), small toys / plush, pet treats / small pet food, promotional items
+⚠ Notes & Adaptations
+
+Some SKUs may not be legal or allowed in all districts (e.g. tobacco regulations, frozen meats) — check local regulation in Vietnam.
+
+The local flavor is critical: Vietnamese snacks (rice crackers, shrimp chips), local juices, and condiments will have strong presence.
+
+In urban areas and premium stores, you may also see imported / premium goods (Japanese snacks, imported chocolates, imported coffee) in addition to local SKUs.
+
+For fresh / perishable goods (like bread, occasionally fresh fruit), many convenience stores in Vietnam lean toward packaged / shelf-stable versions because cold-chain and spoilage are risk factors.
+
+For services or non-goods SKUs (mobile top-up, bill payments), these are often integrated but not “inventory SKUs” per se.
