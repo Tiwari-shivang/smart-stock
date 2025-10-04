@@ -55,7 +55,7 @@ export const EventsPanel: React.FC<EventsPanelProps> = ({ events, className }) =
   };
 
   return (
-    <Card className={clsx('p-4', className)}>
+    <Card className={clsx('p-4 h-full', className)}>
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold text-ss-text">Upcoming Events & Context</h3>
         <Badge variant="default" size="sm">

@@ -55,8 +55,12 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 
               {/* Logo */}
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-ss-primary to-ss-blue rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">S</span>
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <img 
+                    src="/appLogo.svg" 
+                    alt="7-Eleven Logo" 
+                    className="w-10 h-10"
+                  />
                 </div>
                 <div>
                   <h1 className="font-bold text-xl text-ss-text">SmartStock</h1>

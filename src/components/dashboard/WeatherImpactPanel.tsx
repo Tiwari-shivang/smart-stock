@@ -47,7 +47,7 @@ export const WeatherImpactPanel: React.FC<WeatherImpactPanelProps> = ({
   };
 
   return (
-    <Card className={clsx('p-4', className)}>
+    <Card className={clsx('p-4 h-full', className)}>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold text-ss-text">Weather Impact</h3>

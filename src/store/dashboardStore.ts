@@ -38,6 +38,7 @@ interface DashboardState {
   isLoading: boolean;
   searchQuery: string;
   theme: 'light' | 'dark' | 'system';
+  currentRecommendationIndex: number;
   
   // Actions
   setActiveTab: (tab: string) => void;
@@ -52,6 +53,9 @@ interface DashboardState {
   toggleTheme: () => void;
   refreshData: () => Promise<void>;
   updateStoreMetrics: (metrics: Partial<StoreMetrics>) => void;
+  nextRecommendation: () => void;
+  previousRecommendation: () => void;
+  setRecommendationIndex: (index: number) => void;
 }
 
 export const useDashboardStore = create<DashboardState>()(
@@ -74,6 +78,7 @@ export const useDashboardStore = create<DashboardState>()(
         isLoading: false,
         searchQuery: '',
         theme: 'light',
+        currentRecommendationIndex: 0,
         
         // Actions
         setActiveTab: (tab) => 
@@ -95,22 +100,38 @@ export const useDashboardStore = create<DashboardState>()(
           set({ selectedRecommendations: [] }),
         
         approveRecommendation: (id) =>
-          set((state) => ({
-            recommendations: state.recommendations.filter(rec => rec.id !== id),
-            storeMetrics: {
-              ...state.storeMetrics,
-              pendingRecommendations: state.storeMetrics.pendingRecommendations - 1
-            }
-          })),
+          set((state) => {
+            const newRecommendations = state.recommendations.filter(rec => rec.id !== id);
+            const newIndex = state.currentRecommendationIndex >= newRecommendations.length 
+              ? Math.max(0, newRecommendations.length - 1)
+              : state.currentRecommendationIndex;
+            
+            return {
+              recommendations: newRecommendations,
+              currentRecommendationIndex: newIndex,
+              storeMetrics: {
+                ...state.storeMetrics,
+                pendingRecommendations: state.storeMetrics.pendingRecommendations - 1
+              }
+            };
+          }),
         
         rejectRecommendation: (id) =>
-          set((state) => ({
-            recommendations: state.recommendations.filter(rec => rec.id !== id),
-            storeMetrics: {
-              ...state.storeMetrics,
-              pendingRecommendations: state.storeMetrics.pendingRecommendations - 1
-            }
-          })),
+          set((state) => {
+            const newRecommendations = state.recommendations.filter(rec => rec.id !== id);
+            const newIndex = state.currentRecommendationIndex >= newRecommendations.length 
+              ? Math.max(0, newRecommendations.length - 1)
+              : state.currentRecommendationIndex;
+            
+            return {
+              recommendations: newRecommendations,
+              currentRecommendationIndex: newIndex,
+              storeMetrics: {
+                ...state.storeMetrics,
+                pendingRecommendations: state.storeMetrics.pendingRecommendations - 1
+              }
+            };
+          }),
         
         deferRecommendation: (id) =>
           set((state) => ({
@@ -180,7 +201,26 @@ export const useDashboardStore = create<DashboardState>()(
               ...state.storeMetrics,
               ...metrics
             }
-          }))
+          })),
+          
+        nextRecommendation: () =>
+          set((state) => ({
+            currentRecommendationIndex: 
+              state.currentRecommendationIndex < state.recommendations.length - 1
+                ? state.currentRecommendationIndex + 1
+                : 0
+          })),
+          
+        previousRecommendation: () =>
+          set((state) => ({
+            currentRecommendationIndex: 
+              state.currentRecommendationIndex > 0
+                ? state.currentRecommendationIndex - 1
+                : state.recommendations.length - 1
+          })),
+          
+        setRecommendationIndex: (index) =>
+          set({ currentRecommendationIndex: index })
       }),
       {
         name: 'smartstock-dashboard',
