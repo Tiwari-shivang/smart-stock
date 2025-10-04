@@ -120,7 +120,7 @@ export const WeatherImpactPanel: React.FC<WeatherImpactPanelProps> = ({
               className="flex items-center gap-2 p-2 bg-white dark:bg-gray-800 rounded-lg hover:shadow-sm transition-shadow"
             >
               <TrendingUp size={12} className="text-green-500" />
-              <span className="text-xs text-ss-text">{product}</span>
+              <span className="text-xs text-white text-ss-text">{product}</span>
             </motion.div>
           ))}
         </div>

@@ -1,22 +1,22 @@
 /* SmartStock Theme Variables */
 :root {
-  /* Light Theme (default) */
+  /* Light Theme (default) - 7-Eleven Brand Colors */
   --ss-bg: #F7FAFC;
   --ss-panel: #FFFFFF;
   --ss-muted: #F2F4F7;
   --ss-text: #0F172A;
   --ss-subtle: #475569;
-  --ss-primary: #1F6AAE;
-  --ss-green: #16A34A;
-  --ss-red: #DC2626;
-  --ss-blue: #2563EB;
+  --ss-primary: #eb0e2a;
+  --ss-green: #147450;
+  --ss-red: #eb0e2a;
+  --ss-blue: #ff6c01;
   --ss-line: #E5E7EB;
   
-  /* Semantic colors */
-  --ss-info: #0EA5E9;
-  --ss-warning: #F59E0B;
-  --ss-success: #22C55E;
-  --ss-danger: #EF4444;
+  /* Semantic colors - 7-Eleven Brand */
+  --ss-info: #ff6c01;
+  --ss-warning: #ff6c01;
+  --ss-success: #147450;
+  --ss-danger: #eb0e2a;
   
   /* Border radii */
   --r-0: 0;
@@ -70,24 +70,24 @@
   --transition-slow: 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Dark Theme */
+/* Dark Theme - 7-Eleven Brand Colors */
 [data-theme="dark"] {
   --ss-bg: #0B1220;
   --ss-panel: #121A2A;
   --ss-muted: #0F1422;
   --ss-text: #E5E7EB;
   --ss-subtle: #9CA3AF;
-  --ss-primary: #4EA1FF;
-  --ss-green: #34D399;
-  --ss-red: #F87171;
-  --ss-blue: #60A5FA;
+  --ss-primary: #ff4757;
+  --ss-green: #26d97c;
+  --ss-red: #ff4757;
+  --ss-blue: #ff8f40;
   --ss-line: #1F2A3C;
   
-  /* Semantic colors (dark) */
-  --ss-info: #38BDF8;
-  --ss-warning: #FBBF24;
-  --ss-success: #4ADE80;
-  --ss-danger: #F87171;
+  /* Semantic colors (dark) - 7-Eleven Brand */
+  --ss-info: #ff8f40;
+  --ss-warning: #ff8f40;
+  --ss-success: #26d97c;
+  --ss-danger: #ff4757;
   
   /* Shadows (dark) */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);

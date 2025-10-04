@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 interface CardProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   hoverable?: boolean;
   elevation?: 'sm' | 'md' | 'lg' | 'xl';
   radius?: 'sm' | 'md' | 'lg';
@@ -15,6 +16,7 @@ interface CardProps {
 export const Card: React.FC<CardProps> = ({
   children,
   className,
+  style,
   hoverable = false,
   elevation = 'md',
   radius = 'md',
@@ -56,6 +58,7 @@ export const Card: React.FC<CardProps> = ({
         hoverable && 'hover-lift cursor-pointer',
         className
       )}
+      style={style}
       onClick={onClick}
       {...hoverProps}
     >

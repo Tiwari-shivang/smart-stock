@@ -290,7 +290,7 @@ export const mockEvents: Event[] = [
 // Mock Store Metrics
 export const mockStoreMetrics: StoreMetrics = {
   storeId: 'STORE-7E-JP-001',
-  storeName: 'Shibuya Central',
+  storeName: 'Ho Chi Minh',
   rank: 3,
   totalRanks: 250,
   lastSync: new Date('2025-10-04T11:30:00'),

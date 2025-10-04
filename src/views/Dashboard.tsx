@@ -105,13 +105,18 @@ export const Dashboard: React.FC = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <Card className="h-32 bg-gradient-to-r from-ss-primary to-ss-blue text-white p-4">
+              <Card 
+                className="h-32 text-white p-4"
+                style={{
+                  background: 'linear-gradient(135deg, #eb0e2a 0%, #ff6c01 100%)'
+                }}
+              >
                 <div className="flex justify-between items-start h-full">
                   <div className="flex-1">
-                    <h2 className="text-xl font-bold mb-1">
+                    <h2 className="text-xl text-white font-bold mb-1">
                       {getCurrentGreeting()}, {storeMetrics.storeName}!
                     </h2>
-                    <p className="opacity-90 text-sm mb-2">
+                    <p className="opacity-90 text-white text-sm mb-2">
                       You're ranked #{storeMetrics.rank} out of {storeMetrics.totalRanks} stores
                     </p>
                     <div className="flex gap-2 flex-wrap">
@@ -148,53 +153,77 @@ export const Dashboard: React.FC = () => {
         {/* A2-A5: Quick Action Cards */}
         <DashboardSections.QuickCards>
           {/* Add Event Card */}
-          <Card className="h-32 p-3 hover:shadow-lg transition-all cursor-pointer group">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Plus className="text-green-600" size={20} />
-              </div>
-              <div>
-                <h4 className="font-medium text-sm text-ss-text">Add Event</h4>
-                <p className="text-xs text-ss-subtle">Football/Festival</p>
+          <Card className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group">
+            <div className="flex flex-col justify-center h-full">
+              <div className="flex items-center gap-4 mb-2">
+                <motion.div 
+                  className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <Plus className="text-green-600" size={24} />
+                </motion.div>
+                <div>
+                  <h4 className="font-semibold text-base text-ss-text">Add Event</h4>
+                  <p className="text-sm text-ss-subtle">Football/Festival</p>
+                </div>
               </div>
             </div>
           </Card>
 
           {/* Weather Impact Card */}
-          <Card className="h-32 p-3 hover:shadow-lg transition-all cursor-pointer group">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                <CloudRain className="text-blue-600" size={20} />
-              </div>
-              <div>
-                <h4 className="font-medium text-sm text-ss-text">Weather</h4>
-                <p className="text-xs text-ss-subtle">{weatherImpact.demandModifier}x impact</p>
+          <Card className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group">
+            <div className="flex flex-col justify-center h-full">
+              <div className="flex items-center gap-4 mb-2">
+                <motion.div 
+                  className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <CloudRain className="text-blue-600" size={24} />
+                </motion.div>
+                <div>
+                  <h4 className="font-semibold text-base text-ss-text">Weather</h4>
+                  <p className="text-sm text-ss-subtle">{weatherImpact.demandModifier}x impact</p>
+                </div>
               </div>
             </div>
           </Card>
 
           {/* Bulk Approvals Card */}
-          <Card className="h-32 p-3 hover:shadow-lg transition-all cursor-pointer group">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Package className="text-purple-600" size={20} />
-              </div>
-              <div>
-                <h4 className="font-medium text-sm text-ss-text">Bulk Actions</h4>
-                <p className="text-xs text-ss-subtle">Quick approve</p>
+          <Card className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group">
+            <div className="flex flex-col justify-center h-full">
+              <div className="flex items-center gap-4 mb-2">
+                <motion.div 
+                  className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center"
+                  whileHover={{ scale: 1.1, rotate: -5 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <Package className="text-purple-600" size={24} />
+                </motion.div>
+                <div>
+                  <h4 className="font-semibold text-base text-ss-text">Bulk Actions</h4>
+                  <p className="text-sm text-ss-subtle">Quick approve</p>
+                </div>
               </div>
             </div>
           </Card>
 
           {/* Command Search Card */}
-          <Card className="h-32 p-3 hover:shadow-lg transition-all cursor-pointer group">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Search className="text-yellow-600" size={20} />
-              </div>
-              <div>
-                <h4 className="font-medium text-sm text-ss-text">Search</h4>
-                <p className="text-xs text-ss-subtle">Cmd + K</p>
+          <Card className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group">
+            <div className="flex flex-col justify-center h-full">
+              <div className="flex items-center gap-4 mb-2">
+                <motion.div 
+                  className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center"
+                  whileHover={{ scale: 1.15, rotate: 10 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <Search className="text-yellow-600" size={24} />
+                </motion.div>
+                <div>
+                  <h4 className="font-semibold text-base text-ss-text">Search</h4>
+                  <p className="text-sm text-ss-subtle">Cmd + K</p>
+                </div>
               </div>
             </div>
           </Card>
