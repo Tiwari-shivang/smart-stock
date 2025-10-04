@@ -75,12 +75,12 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({
         {/* Selection Checkbox (for batch mode) */}
         {onSelect && (
           <div className="absolute top-3 right-3 z-10">
-            <input
+            {/* <input
               type="checkbox"
               checked={isSelected}
               onChange={() => onSelect(recommendation.id)}
               className="w-4 h-4 rounded border-ss-line text-ss-primary focus:ring-ss-primary"
-            />
+            /> */}
           </div>
         )}
 
@@ -217,14 +217,14 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({
             {isExpanded ? 'Show less' : 'Show more'}
           </button>
 
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <div className="relative group">
               <Button
                 variant="success"
                 size="sm"
-                icon={<Check size={16} />}
+                icon={<Check size={20} />}
                 onClick={() => onApprove?.(recommendation.id)}
-                className="w-8 h-8 p-0"
+                className="w-10 h-10 p-0"
               />
               <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity">
                 <div className="bg-gray-900 text-white text-xs rounded px-2 py-1 whitespace-nowrap">
@@ -240,9 +240,9 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({
               <Button
                 variant="danger"
                 size="sm"
-                icon={<X size={16} />}
+                icon={<X size={20} />}
                 onClick={() => onReject?.(recommendation.id)}
-                className="w-8 h-8 p-0"
+                className="w-10 h-10 p-0"
               />
               <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity">
                 <div className="bg-gray-900 text-white text-xs rounded px-2 py-1 whitespace-nowrap">
@@ -258,9 +258,9 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                icon={<Clock size={16} />}
+                icon={<Clock size={20} />}
                 onClick={() => onDefer?.(recommendation.id)}
-                className="w-8 h-8 p-0"
+                className="w-10 h-10 p-0"
               />
               <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity">
                 <div className="bg-gray-900 text-white text-xs rounded px-2 py-1 whitespace-nowrap">

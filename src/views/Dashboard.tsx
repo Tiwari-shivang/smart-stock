@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Plus,
@@ -8,7 +8,9 @@ import {
   TrendingUp,
   CheckSquare,
   RefreshCw,
-  Download
+  Download,
+  Star,
+  X
 } from 'lucide-react';
 import {
   DashboardLayout,
@@ -46,6 +48,8 @@ export const Dashboard: React.FC = () => {
     nextRecommendation,
     previousRecommendation
   } = useDashboardStore();
+
+  const [isBestSellersModalOpen, setIsBestSellersModalOpen] = useState(false);
 
   // Handle keyboard shortcuts
   useEffect(() => {
@@ -93,6 +97,37 @@ export const Dashboard: React.FC = () => {
     if (hour < 18) return 'Good afternoon';
     return 'Good evening';
   };
+
+  // Get best seller items - essential daily items that customers buy frequently
+  const getBestSellerItems = () => {
+    // Essential daily item categories and keywords
+    const essentialKeywords = [
+      'toothpaste', 'soap', 'beer', 'cigarette', 'towel', 'tissue', 'shampoo',
+      'deodorant', 'razor', 'brush', 'milk', 'bread', 'coffee', 'water',
+      'cola', 'chips', 'chocolate', 'candy', 'energy drink', 'juice'
+    ];
+    
+    // Filter recommendations for essential items
+    const essentialItems = recommendations.filter(rec => {
+      const itemName = rec.skuName.toLowerCase();
+      return essentialKeywords.some(keyword => itemName.includes(keyword));
+    });
+    
+    // If we have essential items, prioritize them
+    if (essentialItems.length > 0) {
+      return essentialItems
+        .sort((a, b) => (b.confidence * b.impactScore) - (a.confidence * a.impactScore))
+        .slice(0, 8);
+    }
+    
+    // Fallback to high-performing items if no essentials found
+    return recommendations
+      .filter(rec => rec.confidence >= 0.8 || rec.impactScore >= 70)
+      .sort((a, b) => (b.confidence * b.impactScore) - (a.confidence * a.impactScore))
+      .slice(0, 8);
+  };
+
+  const bestSellerItems = getBestSellerItems();
 
   return (
     <DashboardLayout activeTab={activeTab} onTabChange={setActiveTab}>
@@ -209,8 +244,11 @@ export const Dashboard: React.FC = () => {
             </div>
           </Card>
 
-          {/* Command Search Card */}
-          <Card className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group">
+          {/* Best Sellers Card */}
+          <Card 
+            className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group"
+            onClick={() => setIsBestSellersModalOpen(true)}
+          >
             <div className="flex flex-col justify-center h-full">
               <div className="flex items-center gap-4 mb-2">
                 <motion.div 
@@ -218,11 +256,11 @@ export const Dashboard: React.FC = () => {
                   whileHover={{ scale: 1.15, rotate: 10 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
-                  <Search className="text-yellow-600" size={24} />
+                  <Star className="text-yellow-600" size={24} />
                 </motion.div>
                 <div>
-                  <h4 className="font-semibold text-base text-ss-text">Search</h4>
-                  <p className="text-sm text-ss-subtle">Cmd + K</p>
+                  <h4 className="font-semibold text-base text-ss-text">Best Sellers</h4>
+                  <p className="text-sm text-ss-subtle">{bestSellerItems.length} essential items</p>
                 </div>
               </div>
             </div>
@@ -397,6 +435,171 @@ export const Dashboard: React.FC = () => {
           </div>
         </DashboardSections.FullWidth>
       </DashboardGrid>
+
+      {/* Best Sellers Modal */}
+      {isBestSellersModalOpen && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="bg-ss-panel rounded-lg shadow-xl w-full max-w-4xl max-h-[80vh] overflow-hidden"
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-ss-line">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
+                  <Star className="text-yellow-600" size={20} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-ss-text">Best Sellers</h2>
+                  <p className="text-sm text-ss-subtle">Essential daily items customers buy frequently</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsBestSellersModalOpen(false)}
+                className="p-2 rounded-lg hover:bg-ss-muted transition-colors"
+              >
+                <X size={20} className="text-ss-subtle" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 overflow-y-auto max-h-[60vh]">
+              {bestSellerItems.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {bestSellerItems.map((item, index) => (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="bg-ss-muted rounded-lg p-4 hover:shadow-md transition-all"
+                    >
+                      <div className="flex items-start gap-4">
+                        {/* Product Image */}
+                        <div className="flex-shrink-0">
+                          <img
+                            src={item.imageUrl || 'https://via.placeholder.com/60'}
+                            alt={item.skuName}
+                            className="w-16 h-16 object-cover rounded-lg"
+                          />
+                        </div>
+
+                        {/* Product Info */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h3 className="font-semibold text-sm text-ss-text truncate">
+                              {item.skuName}
+                            </h3>
+                            <Badge
+                              variant={item.action.toLowerCase() as any}
+                              size="sm"
+                            >
+                              {item.action}
+                            </Badge>
+                          </div>
+
+                          <div className="space-y-2">
+                            {/* Confidence */}
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-ss-subtle">Confidence</span>
+                              <div className="flex items-center gap-2">
+                                <div className="w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                  <div
+                                    className="h-full bg-gradient-to-r from-green-500 to-green-600"
+                                    style={{ width: `${item.confidence * 100}%` }}
+                                  />
+                                </div>
+                                <span className="text-xs font-medium text-ss-text">
+                                  {Math.round(item.confidence * 100)}%
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Impact Score */}
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-ss-subtle">Impact</span>
+                              <div className="flex items-center gap-2">
+                                <div className="w-16 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                  <div
+                                    className="h-full bg-gradient-to-r from-ss-primary to-ss-blue"
+                                    style={{ width: `${item.impactScore}%` }}
+                                  />
+                                </div>
+                                <span className="text-xs font-medium text-ss-text">
+                                  {item.impactScore}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Quantity and Revenue */}
+                            <div className="flex items-center justify-between text-xs">
+                              {item.quantity && item.quantity > 0 && (
+                                <span className="text-ss-subtle">
+                                  Qty: <span className="font-medium text-ss-text">{item.quantity}</span>
+                                </span>
+                              )}
+                              {item.estimatedRevenue && (
+                                <span className={`font-medium ${
+                                  item.estimatedRevenue > 0 ? 'text-green-600' : 'text-red-600'
+                                }`}>
+                                  {item.estimatedRevenue > 0 ? '+' : ''}${Math.abs(item.estimatedRevenue)}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Reasons */}
+                      <div className="mt-3 pt-3 border-t border-ss-line">
+                        <div className="flex flex-wrap gap-1">
+                          {item.reasons.slice(0, 2).map((reason, idx) => (
+                            <span
+                              key={idx}
+                              className="px-2 py-1 bg-white dark:bg-gray-800 rounded text-xs text-ss-subtle"
+                            >
+                              {reason}
+                            </span>
+                          ))}
+                          {item.reasons.length > 2 && (
+                            <span className="px-2 py-1 text-xs text-ss-subtle">
+                              +{item.reasons.length - 2} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <Star className="w-16 h-16 text-ss-subtle mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-ss-text mb-2">No Best Sellers Found</h3>
+                  <p className="text-ss-subtle">
+                    Essential daily items like soaps, toothpaste, beverages, and snacks will appear here.
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex items-center justify-between p-6 border-t border-ss-line bg-ss-muted">
+              <div className="text-sm text-ss-subtle">
+                Showing {bestSellerItems.length} best selling items
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsBestSellersModalOpen(false)}
+              >
+                Close
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </DashboardLayout>
   );
 };

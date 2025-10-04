@@ -25,24 +25,24 @@ export const Pagination: React.FC<PaginationProps> = ({
   if (totalItems <= 1) return null;
 
   return (
-    <div className={clsx('flex items-center gap-2', className)}>
+    <div className={clsx('flex items-center gap-3', className)}>
       <Button
         variant="ghost"
         size="sm"
-        icon={<ChevronLeft size={16} />}
+        icon={<ChevronLeft size={20} />}
         onClick={onPrevious}
-        className="w-8 h-8 p-0"
+        className="w-10 h-10 p-0"
         disabled={totalItems === 0}
       />
       
       {/* Page Indicators */}
-      <div className="flex gap-1">
+      <div className="flex gap-2">
         {Array.from({ length: Math.min(maxDots, totalItems) }).map((_, index) => (
           <button
             key={index}
             onClick={() => onSelect(index)}
             className={clsx(
-              'w-2 h-2 rounded-full transition-colors',
+              'w-3 h-3 rounded-full transition-colors',
               index === currentIndex
                 ? 'bg-ss-primary'
                 : 'bg-ss-line hover:bg-ss-subtle'
@@ -58,9 +58,9 @@ export const Pagination: React.FC<PaginationProps> = ({
       <Button
         variant="ghost"
         size="sm"
-        icon={<ChevronRight size={16} />}
+        icon={<ChevronRight size={20} />}
         onClick={onNext}
-        className="w-8 h-8 p-0"
+        className="w-10 h-10 p-0"
         disabled={totalItems === 0}
       />
     </div>
