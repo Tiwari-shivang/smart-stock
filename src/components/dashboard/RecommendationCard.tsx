@@ -74,13 +74,13 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({
       >
         {/* Selection Checkbox (for batch mode) */}
         {onSelect && (
-          <div className="absolute top-4 left-4 z-10">
-            <input
+          <div className="absolute top-3 right-3 z-10">
+            {/* <input
               type="checkbox"
               checked={isSelected}
               onChange={() => onSelect(recommendation.id)}
-              className="w-5 h-5 rounded border-ss-line text-ss-primary focus:ring-ss-primary"
-            />
+              className="w-4 h-4 rounded border-ss-line text-ss-primary focus:ring-ss-primary"
+            /> */}
           </div>
         )}
 
@@ -217,39 +217,69 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({
             {isExpanded ? 'Show less' : 'Show more'}
           </button>
 
-          <div className="flex gap-2">
-            <Button
-              variant="success"
-              size="sm"
-              icon={<Check size={16} />}
-              onClick={() => onApprove?.(recommendation.id)}
-            >
-              Approve
-            </Button>
-            <Button
-              variant="danger"
-              size="sm"
-              icon={<X size={16} />}
-              onClick={() => onReject?.(recommendation.id)}
-            >
-              Reject
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              icon={<Clock size={16} />}
-              onClick={() => onDefer?.(recommendation.id)}
-            >
-              Defer
-            </Button>
+          <div className="flex gap-3">
+            <div className="relative group">
+              <Button
+                variant="success"
+                size="sm"
+                icon={<Check size={20} />}
+                onClick={() => onApprove?.(recommendation.id)}
+                className="w-10 h-10 p-0"
+              />
+              <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="bg-gray-900 text-white text-xs rounded px-2 py-1 whitespace-nowrap">
+                  Approve (A)
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2">
+                    <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative group">
+              <Button
+                variant="danger"
+                size="sm"
+                icon={<X size={20} />}
+                onClick={() => onReject?.(recommendation.id)}
+                className="w-10 h-10 p-0"
+              />
+              <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="bg-gray-900 text-white text-xs rounded px-2 py-1 whitespace-nowrap">
+                  Reject (R)
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2">
+                    <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative group">
+              <Button
+                variant="ghost"
+                size="sm"
+                icon={<Clock size={20} />}
+                onClick={() => onDefer?.(recommendation.id)}
+                className="w-10 h-10 p-0"
+              />
+              <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="bg-gray-900 text-white text-xs rounded px-2 py-1 whitespace-nowrap">
+                  Defer (D)
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2">
+                    <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Keyboard Shortcuts Hint */}
         <div className="absolute bottom-2 left-4 text-xs text-ss-subtle opacity-0 hover:opacity-100 transition-opacity">
-          Press <kbd className="px-1 py-0.5 bg-ss-muted rounded">A</kbd> to approve,{' '}
-          <kbd className="px-1 py-0.5 bg-ss-muted rounded">R</kbd> to reject,{' '}
-          <kbd className="px-1 py-0.5 bg-ss-muted rounded">D</kbd> to defer
+          <kbd className="px-1 py-0.5 bg-ss-muted rounded">A</kbd> approve{' '}
+          <kbd className="px-1 py-0.5 bg-ss-muted rounded">R</kbd> reject{' '}
+          <kbd className="px-1 py-0.5 bg-ss-muted rounded">D</kbd> defer{' '}
+          <kbd className="px-1 py-0.5 bg-ss-muted rounded">←→</kbd> navigate
         </div>
       </Card>
     </motion.div>

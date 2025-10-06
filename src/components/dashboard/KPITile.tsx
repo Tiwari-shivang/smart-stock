@@ -37,7 +37,7 @@ export const KPITile: React.FC<KPITileProps> = ({
 
   if (loading) {
     return (
-      <Card className={clsx(sizeClasses[size], className)}>
+      <Card className={clsx(sizeClasses[size], 'h-full', className)}>
         <div className="animate-pulse">
           <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3"></div>
           <div className="h-8 bg-gray-300 dark:bg-gray-600 rounded w-1/2 mb-2"></div>
@@ -83,7 +83,7 @@ export const KPITile: React.FC<KPITileProps> = ({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className={clsx(sizeClasses[size], 'relative group', className)} hoverable>
+      <Card className={clsx(sizeClasses[size], 'relative group h-full', className)} hoverable>
         {/* Tooltip Icon */}
         {tooltip && (
           <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">

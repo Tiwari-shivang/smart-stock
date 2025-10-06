@@ -56,58 +56,68 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
   );
 };
 
-// Pre-configured grid sections based on the style guide layout map
+// Pre-configured grid sections based on the updated layout specifications
 export const DashboardSections = {
   // A1: Greeting / Summary (columns 1-6)
   GreetingSummary: ({ children }: { children: React.ReactNode }) => (
-    <div className="col-span-1 lg:col-span-8 desktop:col-span-6">
+    <div className="col-span-1 lg:col-span-4 desktop:col-span-6">
       {children}
     </div>
   ),
 
-  // A2-A5: Quick Cards (columns 7-10, 2x2 grid)
+  // A2: Quick Cards (columns 7-12)
   QuickCards: ({ children }: { children: React.ReactNode }) => (
-    <div className="col-span-1 lg:col-span-8 desktop:col-span-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div className="col-span-1 lg:col-span-4 desktop:col-span-6 grid grid-cols-2 lg:grid-cols-2 gap-4">
       {children}
     </div>
   ),
 
-  // A6: Store Overview (columns 11-12)
-  StoreOverview: ({ children }: { children: React.ReactNode }) => (
-    <div className="col-span-1 lg:col-span-8 desktop:col-span-2">
+  // Left Column: Main Content (columns 1-8)
+  LeftColumn: ({ children }: { children: React.ReactNode }) => (
+    <div className="col-span-1 lg:col-span-8 desktop:col-span-8 flex flex-col gap-6 h-full">
       {children}
     </div>
   ),
 
-  // B1: Demand Bubbles (columns 1-9)
-  DemandBubbles: ({ children }: { children: React.ReactNode }) => (
-    <div className="col-span-1 lg:col-span-8 desktop:col-span-9">
+  // Right Column: Side Content (columns 9-12)
+  RightColumn: ({ children }: { children: React.ReactNode }) => (
+    <div className="col-span-1 lg:col-span-8 desktop:col-span-4 flex flex-col gap-6 h-full">
       {children}
     </div>
   ),
 
-  // B2-B3: Events & Actions (columns 10-12)
-  EventsAndActions: ({ children }: { children: React.ReactNode }) => (
-    <div className="col-span-1 lg:col-span-8 desktop:col-span-3 space-y-4">
-      {children}
-    </div>
-  ),
-
-  // C: Recommendation Feed (full width)
-  RecommendationFeed: ({ children }: { children: React.ReactNode }) => (
+  // Full Width Section (columns 1-12)
+  FullWidth: ({ children }: { children: React.ReactNode }) => (
     <div className="col-span-1 lg:col-span-8 desktop:col-span-12">
       {children}
     </div>
   ),
 
-  // D1: Promotions & Bundles (columns 1-8)
+  // Legacy sections for backward compatibility
+  DemandBubbles: ({ children }: { children: React.ReactNode }) => (
+    <div className="col-span-1 lg:col-span-8 desktop:col-span-8">
+      {children}
+    </div>
+  ),
+
+  EventsAndActions: ({ children }: { children: React.ReactNode }) => (
+    <div className="col-span-1 lg:col-span-8 desktop:col-span-4 space-y-4">
+      {children}
+    </div>
+  ),
+
+  RecommendationFeed: ({ children }: { children: React.ReactNode }) => (
+    <div className="col-span-1 lg:col-span-8 desktop:col-span-8">
+      {children}
+    </div>
+  ),
+
   PromotionsBundles: ({ children }: { children: React.ReactNode }) => (
     <div className="col-span-1 lg:col-span-8 desktop:col-span-8">
       {children}
     </div>
   ),
 
-  // D2: Impact & Trends (columns 9-12)
   ImpactTrends: ({ children }: { children: React.ReactNode }) => (
     <div className="col-span-1 lg:col-span-8 desktop:col-span-4">
       {children}

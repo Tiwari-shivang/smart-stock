@@ -13,10 +13,13 @@ export default {
         'ss-text': 'var(--ss-text)',
         'ss-subtle': 'var(--ss-subtle)',
         'ss-primary': 'var(--ss-primary)',
+        'ss-primary-dark': 'var(--ss-primary-dark)',
         'ss-green': 'var(--ss-green)',
         'ss-red': 'var(--ss-red)',
         'ss-blue': 'var(--ss-blue)',
+        'ss-blue-dark': 'var(--ss-blue-dark)',
         'ss-line': 'var(--ss-line)',
+        'ss-background-dark': 'var(--ss-background-dark)',
       },
       borderRadius: {
         'ss-sm': '8px',

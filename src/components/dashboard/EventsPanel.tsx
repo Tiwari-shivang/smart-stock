@@ -55,7 +55,7 @@ export const EventsPanel: React.FC<EventsPanelProps> = ({ events, className }) =
   };
 
   return (
-    <Card className={clsx('p-4', className)}>
+    <Card className={clsx('p-4 h-full', className)}>
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold text-ss-text">Upcoming Events & Context</h3>
         <Badge variant="default" size="sm">
@@ -119,7 +119,7 @@ export const EventsPanel: React.FC<EventsPanelProps> = ({ events, className }) =
                   {event.affectedCategories.slice(0, 3).map((category, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-0.5 bg-white dark:bg-gray-800 rounded text-xs text-ss-subtle"
+                      className="px-2 py-0.5 text-white dark:bg-gray-800 rounded text-xs text-ss-subtle"
                     >
                       {category}
                     </span>
