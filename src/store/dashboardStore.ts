@@ -239,17 +239,17 @@ export const useDashboardStore = create<DashboardState>()(
               const confidence = event.impact === 'HIGH' ? 92 : event.impact === 'MEDIUM' ? 85 : 78;
               
               const categoryItems: Record<string, { name: string; image: string; quantity: number }> = {
-                'BEVERAGES': { name: 'Energy Drinks & Water', image: '/energy.png', quantity: Math.floor(50 * multiplier) },
-                'SNACKS': { name: 'Chips & Popcorn Bundle', image: '/noodles.png', quantity: Math.floor(40 * multiplier) },
-                'READY_TO_EAT': { name: 'Sandwiches & Wraps', image: '/umbrella.png', quantity: Math.floor(30 * multiplier) },
-                'DAIRY': { name: 'Ice Cream & Frozen Treats', image: '/beer.png', quantity: Math.floor(25 * multiplier) },
-                'ALCOHOL': { name: 'Beer & Wine Selection', image: '/beer.png', quantity: Math.floor(35 * multiplier) },
-                'HOUSEHOLD': { name: 'Paper Products', image: '/umbrella.png', quantity: Math.floor(20 * multiplier) }
+                'BEVERAGES': { name: 'Energy Drinks & Water', image: 'https://ik.imagekit.io/r3grqaeps/static_site_imgs/energy.png?updatedAt=1759762012825', quantity: Math.floor(50 * multiplier) },
+                'SNACKS': { name: 'Chips & Popcorn Bundle', image: 'https://ik.imagekit.io/r3grqaeps/static_site_imgs/noodles.png?updatedAt=1759762012378', quantity: Math.floor(40 * multiplier) },
+                'READY_TO_EAT': { name: 'Sandwiches & Wraps', image: 'https://ik.imagekit.io/r3grqaeps/static_site_imgs/umbrella.png?updatedAt=1759762011792', quantity: Math.floor(30 * multiplier) },
+                'DAIRY': { name: 'Ice Cream & Frozen Treats', image: 'https://ik.imagekit.io/r3grqaeps/static_site_imgs/beer.png?updatedAt=1759762012171', quantity: Math.floor(25 * multiplier) },
+                'ALCOHOL': { name: 'Beer & Wine Selection', image: 'https://ik.imagekit.io/r3grqaeps/static_site_imgs/beer.png?updatedAt=1759762012171', quantity: Math.floor(35 * multiplier) },
+                'HOUSEHOLD': { name: 'Paper Products', image: 'https://ik.imagekit.io/r3grqaeps/static_site_imgs/umbrella.png?updatedAt=1759762011792', quantity: Math.floor(20 * multiplier) }
               };
               
               const item = categoryItems[category] || { 
                 name: `${category} Bundle`, 
-                image: '/noodles.png', 
+                image: 'https://ik.imagekit.io/r3grqaeps/static_site_imgs/noodles.png?updatedAt=1759762012378', 
                 quantity: Math.floor(30 * multiplier) 
               };
               

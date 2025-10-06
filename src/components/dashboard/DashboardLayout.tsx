@@ -57,7 +57,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 flex items-center justify-center">
                   <img 
-                    src="/appLogo.svg" 
+                    src="https://ik.imagekit.io/r3grqaeps/static_site_imgs/appLogo.svg?updatedAt=1759761984148" 
                     alt="7-Eleven Logo" 
                     className="w-10 h-10"
                   />

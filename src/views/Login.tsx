@@ -192,7 +192,7 @@ export const Login: React.FC = () => {
                 >
                   <div className="relative inline-block">
                     <img 
-                      src="/appLogo.svg" 
+                      src="https://ik.imagekit.io/r3grqaeps/static_site_imgs/appLogo.svg?updatedAt=1759761984148" 
                       alt="7-Eleven SmartStock" 
                       className="h-20 mx-auto drop-shadow-lg"
                     />
