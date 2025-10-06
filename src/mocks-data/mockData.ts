@@ -33,7 +33,7 @@ export const mockSKUs: SKU[] = [
     minStock: 30,
     maxStock: 200,
     price: 3.50,
-    imageUrl: 'https://via.placeholder.com/150/FFD700/000000?text=Chips',
+    imageUrl: '/src/assets/lays.png',
     barcode: '4894128302848',
     supplier: 'PepsiCo'
   },
@@ -247,7 +247,7 @@ export const mockRecommendations: Recommendation[] = [
     id: 'rec-003',
     sku: 'sku-002',
     skuName: 'Lay\'s Original Chips',
-    imageUrl: 'https://via.placeholder.com/150/FFD700/000000?text=Chips',
+    imageUrl: '/src/assets/lays.png',
     action: 'PROMOTE',
     confidence: 0.75,
     impactScore: 65,
