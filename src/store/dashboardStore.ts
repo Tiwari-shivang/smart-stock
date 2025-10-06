@@ -56,6 +56,8 @@ interface DashboardState {
   nextRecommendation: () => void;
   previousRecommendation: () => void;
   setRecommendationIndex: (index: number) => void;
+  addEvent: (event: Event) => void;
+  generateEventRecommendations: (event: Event) => void;
 }
 
 export const useDashboardStore = create<DashboardState>()(
@@ -220,7 +222,64 @@ export const useDashboardStore = create<DashboardState>()(
           })),
           
         setRecommendationIndex: (index) =>
-          set({ currentRecommendationIndex: index })
+          set({ currentRecommendationIndex: index }),
+          
+        addEvent: (event) =>
+          set((state) => ({
+            events: [event, ...state.events]
+          })),
+          
+        generateEventRecommendations: (event) =>
+          set((state) => {
+            const categories = event.affectedCategories || [];
+            const multiplier = event.estimatedDemandMultiplier || 1.5;
+            
+            const newRecommendations: Recommendation[] = categories.slice(0, 3).map((category, index) => {
+              const baseImpact = event.impact === 'HIGH' ? 15000 : event.impact === 'MEDIUM' ? 8000 : 4000;
+              const confidence = event.impact === 'HIGH' ? 92 : event.impact === 'MEDIUM' ? 85 : 78;
+              
+              const categoryItems: Record<string, { name: string; image: string; quantity: number }> = {
+                'BEVERAGES': { name: 'Energy Drinks & Water', image: '/energy.png', quantity: Math.floor(50 * multiplier) },
+                'SNACKS': { name: 'Chips & Popcorn Bundle', image: '/noodles.png', quantity: Math.floor(40 * multiplier) },
+                'READY_TO_EAT': { name: 'Sandwiches & Wraps', image: '/umbrella.png', quantity: Math.floor(30 * multiplier) },
+                'DAIRY': { name: 'Ice Cream & Frozen Treats', image: '/beer.png', quantity: Math.floor(25 * multiplier) },
+                'ALCOHOL': { name: 'Beer & Wine Selection', image: '/beer.png', quantity: Math.floor(35 * multiplier) },
+                'HOUSEHOLD': { name: 'Paper Products', image: '/umbrella.png', quantity: Math.floor(20 * multiplier) }
+              };
+              
+              const item = categoryItems[category] || { 
+                name: `${category} Bundle`, 
+                image: '/noodles.png', 
+                quantity: Math.floor(30 * multiplier) 
+              };
+              
+              return {
+                id: `event-rec-${event.id}-${index}`,
+                sku: `SKU-${category}-${index}`,
+                skuName: item.name,
+                imageUrl: item.image,
+                action: 'STOCK_UP',
+                confidence: (confidence + (index * -2)) / 100,
+                impactScore: Math.floor(baseImpact * multiplier * (1 - index * 0.1)),
+                reasons: [`${event.name} expected to increase demand for ${category.toLowerCase()} by ${Math.floor((multiplier - 1) * 100)}%`],
+                quantity: item.quantity,
+                shelfFit: true,
+                priority: event.impact,
+                source: 'EVENT_ANALYSIS',
+                status: 'PENDING',
+                createdAt: new Date(),
+                expiresAt: new Date(event.date)
+              };
+            });
+            
+            return {
+              recommendations: [...newRecommendations, ...state.recommendations],
+              storeMetrics: {
+                ...state.storeMetrics,
+                pendingRecommendations: state.storeMetrics.pendingRecommendations + newRecommendations.length
+              }
+            };
+          })
       }),
       {
         name: 'smartstock-dashboard',

@@ -18,6 +18,11 @@
   --ss-success: #147450;
   --ss-danger: #eb0e2a;
   
+  /* Additional colors for Login page */
+  --ss-primary-dark: #c10d24;
+  --ss-blue-dark: #e55f00;
+  --ss-background-dark: #121A2A;
+  
   /* Border radii */
   --r-0: 0;
   --r-sm: 8px;
@@ -88,6 +93,11 @@
   --ss-warning: #ff8f40;
   --ss-success: #26d97c;
   --ss-danger: #ff4757;
+  
+  /* Additional colors for Login page (dark) */
+  --ss-primary-dark: #ff6266;
+  --ss-blue-dark: #ff9e5a;
+  --ss-background-dark: #0B1220;
   
   /* Shadows (dark) */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);

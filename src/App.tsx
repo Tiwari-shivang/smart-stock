@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Dashboard } from '@/views/Dashboard';
+import { Login } from '@/views/Login';
 import { useDashboardStore } from '@/store/dashboardStore';
 
 const queryClient = new QueryClient({
@@ -49,7 +51,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-ss-bg">
-        <Dashboard />
+        <Router>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Dashboard />} />
+          </Routes>
+        </Router>
       </div>
     </QueryClientProvider>
   );

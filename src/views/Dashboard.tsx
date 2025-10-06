@@ -46,10 +46,26 @@ export const Dashboard: React.FC = () => {
     batchApproveRecommendations,
     refreshData,
     nextRecommendation,
-    previousRecommendation
+    previousRecommendation,
+    addEvent,
+    generateEventRecommendations
   } = useDashboardStore();
 
   const [isBestSellersModalOpen, setIsBestSellersModalOpen] = useState(false);
+  const [isAddEventModalOpen, setIsAddEventModalOpen] = useState(false);
+  
+  // Event form state
+  const [eventForm, setEventForm] = useState({
+    name: '',
+    type: 'FOOTBALL' as const,
+    date: '',
+    time: '',
+    impact: 'MEDIUM' as const,
+    location: '',
+    description: '',
+    affectedCategories: [] as string[],
+    estimatedDemandMultiplier: 1.5
+  });
 
   // Handle keyboard shortcuts
   useEffect(() => {
@@ -109,7 +125,7 @@ export const Dashboard: React.FC = () => {
     
     // Filter recommendations for essential items
     const essentialItems = recommendations.filter(rec => {
-      const itemName = rec.skuName.toLowerCase();
+      const itemName = rec.skuName?.toLowerCase() || rec.sku?.toLowerCase() || '';
       return essentialKeywords.some(keyword => itemName.includes(keyword));
     });
     
@@ -128,6 +144,57 @@ export const Dashboard: React.FC = () => {
   };
 
   const bestSellerItems = getBestSellerItems();
+
+  // Handle event form submission
+  const handleCreateEvent = () => {
+    // Create new event
+    const newEvent = {
+      id: `event-${Date.now()}`,
+      name: eventForm.name,
+      type: eventForm.type,
+      date: new Date(`${eventForm.date}T${eventForm.time}`),
+      impact: eventForm.impact,
+      location: eventForm.location,
+      description: eventForm.description,
+      affectedCategories: eventForm.affectedCategories,
+      estimatedDemandMultiplier: eventForm.estimatedDemandMultiplier
+    };
+
+    // Add event to store and generate recommendations
+    addEvent(newEvent);
+    generateEventRecommendations(newEvent);
+    
+    // Reset form and close modal
+    setEventForm({
+      name: '',
+      type: 'FOOTBALL',
+      date: '',
+      time: '',
+      impact: 'MEDIUM',
+      location: '',
+      description: '',
+      affectedCategories: [],
+      estimatedDemandMultiplier: 1.5
+    });
+    setIsAddEventModalOpen(false);
+  };
+
+
+  // Available categories for events
+  const availableCategories = [
+    'Beverages', 'Snacks', 'Alcohol', 'Ready-to-Eat', 'Personal Care', 
+    'Household', 'Instant Food', 'Dairy & Frozen', 'Non-Food'
+  ];
+
+  // Handle category selection
+  const toggleCategory = (category: string) => {
+    setEventForm(prev => ({
+      ...prev,
+      affectedCategories: prev.affectedCategories.includes(category)
+        ? prev.affectedCategories.filter(c => c !== category)
+        : [...prev.affectedCategories, category]
+    }));
+  };
 
   return (
     <DashboardLayout activeTab={activeTab} onTabChange={setActiveTab}>
@@ -188,7 +255,10 @@ export const Dashboard: React.FC = () => {
         {/* A2-A5: Quick Action Cards */}
         <DashboardSections.QuickCards>
           {/* Add Event Card */}
-          <Card className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group">
+          <Card 
+            className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group"
+            onClick={() => setIsAddEventModalOpen(true)}
+          >
             <div className="flex flex-col justify-center h-full">
               <div className="flex items-center gap-4 mb-2">
                 <motion.div 
@@ -596,6 +666,222 @@ export const Dashboard: React.FC = () => {
               >
                 Close
               </Button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Add Event Modal */}
+      {isAddEventModalOpen && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="bg-ss-panel rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden"
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-ss-line">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                  <Plus className="text-green-600" size={20} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-ss-text">Add New Event</h2>
+                  <p className="text-sm text-ss-subtle">Create event to generate smart recommendations</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsAddEventModalOpen(false)}
+                className="p-2 rounded-lg hover:bg-ss-muted transition-colors"
+              >
+                <X size={20} className="text-ss-subtle" />
+              </button>
+            </div>
+
+            {/* Modal Content - Form */}
+            <div className="p-6 overflow-y-auto max-h-[70vh]">
+              <form className="space-y-6">
+                {/* Event Name */}
+                <div>
+                  <label className="block text-sm font-medium text-ss-text mb-2">
+                    Event Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={eventForm.name}
+                    onChange={(e) => setEventForm(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="e.g., Champions League Final, Summer Festival"
+                    className="w-full px-3 py-2 bg-ss-muted rounded-lg text-ss-text placeholder-ss-subtle outline-none focus:ring-2 focus:ring-ss-primary border border-ss-line"
+                  />
+                </div>
+
+                {/* Event Type & Impact */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-ss-text mb-2">
+                      Event Type *
+                    </label>
+                    <select
+                      value={eventForm.type}
+                      onChange={(e) => setEventForm(prev => ({ ...prev, type: e.target.value as any }))}
+                      className="w-full px-3 py-2 bg-ss-muted rounded-lg text-ss-text outline-none focus:ring-2 focus:ring-ss-primary border border-ss-line"
+                    >
+                      <option value="FOOTBALL">Football Match</option>
+                      <option value="FESTIVAL">Festival</option>
+                      <option value="CONCERT">Concert</option>
+                      <option value="WEATHER">Weather Event</option>
+                      <option value="HOLIDAY">Holiday</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-ss-text mb-2">
+                      Expected Impact *
+                    </label>
+                    <select
+                      value={eventForm.impact}
+                      onChange={(e) => setEventForm(prev => ({ ...prev, impact: e.target.value as any }))}
+                      className="w-full px-3 py-2 bg-ss-muted rounded-lg text-ss-text outline-none focus:ring-2 focus:ring-ss-primary border border-ss-line"
+                    >
+                      <option value="LOW">Low Impact</option>
+                      <option value="MEDIUM">Medium Impact</option>
+                      <option value="HIGH">High Impact</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Date & Time */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-ss-text mb-2">
+                      Date *
+                    </label>
+                    <input
+                      type="date"
+                      value={eventForm.date}
+                      onChange={(e) => setEventForm(prev => ({ ...prev, date: e.target.value }))}
+                      className="w-full px-3 py-2 bg-ss-muted rounded-lg text-ss-text outline-none focus:ring-2 focus:ring-ss-primary border border-ss-line"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-ss-text mb-2">
+                      Time
+                    </label>
+                    <input
+                      type="time"
+                      value={eventForm.time}
+                      onChange={(e) => setEventForm(prev => ({ ...prev, time: e.target.value }))}
+                      className="w-full px-3 py-2 bg-ss-muted rounded-lg text-ss-text outline-none focus:ring-2 focus:ring-ss-primary border border-ss-line"
+                    />
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div>
+                  <label className="block text-sm font-medium text-ss-text mb-2">
+                    Location
+                  </label>
+                  <input
+                    type="text"
+                    value={eventForm.location}
+                    onChange={(e) => setEventForm(prev => ({ ...prev, location: e.target.value }))}
+                    placeholder="e.g., National Stadium, City Center"
+                    className="w-full px-3 py-2 bg-ss-muted rounded-lg text-ss-text placeholder-ss-subtle outline-none focus:ring-2 focus:ring-ss-primary border border-ss-line"
+                  />
+                </div>
+
+                {/* Demand Multiplier */}
+                <div>
+                  <label className="block text-sm font-medium text-ss-text mb-2">
+                    Demand Multiplier: {eventForm.estimatedDemandMultiplier}x
+                  </label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="5"
+                    step="0.1"
+                    value={eventForm.estimatedDemandMultiplier}
+                    onChange={(e) => setEventForm(prev => ({ ...prev, estimatedDemandMultiplier: parseFloat(e.target.value) }))}
+                    className="w-full h-2 bg-ss-muted rounded-lg appearance-none cursor-pointer"
+                  />
+                  <div className="flex justify-between text-xs text-ss-subtle mt-1">
+                    <span>1x (Normal)</span>
+                    <span>3x (High)</span>
+                    <span>5x (Extreme)</span>
+                  </div>
+                </div>
+
+                {/* Affected Categories */}
+                <div>
+                  <label className="block text-sm font-medium text-ss-text mb-2">
+                    Affected Categories
+                  </label>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {availableCategories.map((category) => (
+                      <label
+                        key={category}
+                        className={`flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-colors ${
+                          eventForm.affectedCategories.includes(category)
+                            ? 'bg-ss-primary/10 text-ss-primary'
+                            : 'bg-ss-muted hover:bg-ss-muted/80'
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={eventForm.affectedCategories.includes(category)}
+                          onChange={() => toggleCategory(category)}
+                          className="hidden"
+                        />
+                        <CheckSquare
+                          size={16}
+                          className={eventForm.affectedCategories.includes(category) ? 'text-ss-primary' : 'text-ss-subtle'}
+                        />
+                        <span className="text-sm">{category}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div>
+                  <label className="block text-sm font-medium text-ss-text mb-2">
+                    Description
+                  </label>
+                  <textarea
+                    value={eventForm.description}
+                    onChange={(e) => setEventForm(prev => ({ ...prev, description: e.target.value }))}
+                    placeholder="Additional details about the event..."
+                    rows={3}
+                    className="w-full px-3 py-2 bg-ss-muted rounded-lg text-ss-text placeholder-ss-subtle outline-none focus:ring-2 focus:ring-ss-primary border border-ss-line resize-none"
+                  />
+                </div>
+              </form>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex items-center justify-between p-6 border-t border-ss-line bg-ss-muted">
+              <div className="text-sm text-ss-subtle">
+                {eventForm.affectedCategories.length > 0 && (
+                  <span>{eventForm.affectedCategories.length} categories selected</span>
+                )}
+              </div>
+              <div className="flex gap-3">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsAddEventModalOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={handleCreateEvent}
+                  disabled={!eventForm.name || !eventForm.date}
+                >
+                  Create Event
+                </Button>
+              </div>
             </div>
           </motion.div>
         </div>
