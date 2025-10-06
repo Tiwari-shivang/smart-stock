@@ -51,7 +51,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-ss-bg">
-        <Router>
+        <Router basename={import.meta.env.BASE_URL}>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Dashboard />} />
