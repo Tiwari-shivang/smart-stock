@@ -63,7 +63,7 @@ interface DashboardState {
 export const useDashboardStore = create<DashboardState>()(
   devtools(
     persist(
-      (set, get) => ({
+      (set) => ({
         // Initial Data
         recommendations: mockRecommendations,
         events: mockEvents,
@@ -258,12 +258,13 @@ export const useDashboardStore = create<DashboardState>()(
                 sku: `SKU-${category}-${index}`,
                 skuName: item.name,
                 imageUrl: item.image,
-                action: 'STOCK_UP',
+                action: 'RESTOCK',
                 confidence: (confidence + (index * -2)) / 100,
                 impactScore: Math.floor(baseImpact * multiplier * (1 - index * 0.1)),
                 reasons: [`${event.name} expected to increase demand for ${category.toLowerCase()} by ${Math.floor((multiplier - 1) * 100)}%`],
                 quantity: item.quantity,
                 shelfFit: true,
+                volatility: 0.1,
                 priority: event.impact,
                 source: 'EVENT_ANALYSIS',
                 status: 'PENDING',

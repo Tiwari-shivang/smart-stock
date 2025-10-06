@@ -3,12 +3,9 @@ import { motion } from 'framer-motion';
 import {
   Plus,
   CloudRain,
-  Search,
   Package,
-  TrendingUp,
   CheckSquare,
   RefreshCw,
-  Download,
   Star,
   X
 } from 'lucide-react';

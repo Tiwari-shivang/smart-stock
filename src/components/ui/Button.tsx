@@ -46,7 +46,7 @@ export const Button: React.FC<ButtonProps> = ({
         className
       )}
       disabled={disabled || isLoading}
-      {...props}
+      {...(props as any)}
     >
       {isLoading ? (
         <span className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
