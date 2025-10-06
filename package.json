@@ -1,7 +1,7 @@
 {
   "name": "seven11-fe",
   "version": "0.0.0",
-  "homepage": "https://shivangtiwari.github.io/seven11-fe",
+  "homepage": "https://shivangtiwari.github.io/smart-stock",
   "type": "module",
   "scripts": {
     "dev": "vite",

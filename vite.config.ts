@@ -4,7 +4,7 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/seven11-fe/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/smart-stock/' : '/',
   plugins: [react()],
   resolve: {
     alias: {
