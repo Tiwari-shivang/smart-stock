@@ -191,10 +191,10 @@ export const Login: React.FC = () => {
                   className="mb-6"
                 >
                   <div className="relative inline-block">
-                    <img 
-                      src="https://ik.imagekit.io/r3grqaeps/static_site_imgs/appLogo.svg?updatedAt=1759761984148" 
-                      alt="7-Eleven SmartStock" 
-                      className="h-20 mx-auto drop-shadow-lg"
+                    <img
+                      src="https://ik.imagekit.io/r3grqaeps/static_site_imgs/appLogo.png?updatedAt=1760002106861"
+                      alt="7-Eleven SmartStock"
+                      className="h-[60px] w-[70px] mx-auto drop-shadow-lg"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-ss-primary/20 to-ss-blue/20 rounded-full blur-xl"></div>
                   </div>

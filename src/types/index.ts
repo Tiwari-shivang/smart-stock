@@ -63,11 +63,13 @@ export interface Bundle {
   id: string;
   name: string;
   items: string[];
-  attachRate: number;
+  attachRate?: number;
   projectedUplift: number;
+  potentialRevenueLift?: number;
   active: boolean;
   price: number;
   discount: number;
+  description?: string;
 }
 
 export interface TrendData {

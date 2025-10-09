@@ -7,7 +7,8 @@ import {
   CheckSquare,
   RefreshCw,
   Star,
-  X
+  X,
+  TrendingUp
 } from 'lucide-react';
 import {
   DashboardLayout,
@@ -50,6 +51,8 @@ export const Dashboard: React.FC = () => {
 
   const [isBestSellersModalOpen, setIsBestSellersModalOpen] = useState(false);
   const [isAddEventModalOpen, setIsAddEventModalOpen] = useState(false);
+  const [highlightWeather, setHighlightWeather] = useState(false);
+  const [highlightBundles, setHighlightBundles] = useState(false);
   
   // Event form state
   const [eventForm, setEventForm] = useState({
@@ -142,6 +145,34 @@ export const Dashboard: React.FC = () => {
 
   const bestSellerItems = getBestSellerItems();
 
+  // Filter out weather-based recommendations from stock recommendations
+  const nonWeatherRecommendations = recommendations.filter(rec => {
+    const weatherKeywords = ['rainy', 'weather', 'rain', 'storm', 'umbrella'];
+    const hasWeatherReason = rec.reasons.some(reason =>
+      weatherKeywords.some(keyword => reason.toLowerCase().includes(keyword))
+    );
+    return !hasWeatherReason;
+  });
+
+  // Scroll and highlight functions
+  const scrollToWeather = () => {
+    const element = document.getElementById('weather-impact');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setHighlightWeather(true);
+      setTimeout(() => setHighlightWeather(false), 1000);
+    }
+  };
+
+  const scrollToBundles = () => {
+    const element = document.getElementById('current-bundles');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setHighlightBundles(true);
+      setTimeout(() => setHighlightBundles(false), 1000);
+    }
+  };
+
   // Handle event form submission
   const handleCreateEvent = () => {
     // Create new event
@@ -204,7 +235,7 @@ export const Dashboard: React.FC = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <Card 
+              <Card
                 className="h-32 text-white p-4"
                 style={{
                   background: 'linear-gradient(135deg, #eb0e2a 0%, #ff6c01 100%)'
@@ -230,7 +261,7 @@ export const Dashboard: React.FC = () => {
                 </div>
               </Card>
             </motion.div>
-            
+
             {/* Bottom Row: KPI Tiles matching height with right side cards */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
               {kpiTiles.slice(0, 2).map((kpi, index) => (
@@ -251,33 +282,36 @@ export const Dashboard: React.FC = () => {
 
         {/* A2-A5: Quick Action Cards */}
         <DashboardSections.QuickCards>
-          {/* Add Event Card */}
-          <Card 
+          {/* Total Recommendations Card */}
+          <Card
             className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group"
-            onClick={() => setIsAddEventModalOpen(true)}
+            onClick={() => {
+              const element = document.getElementById('stock-recommendations');
+              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
           >
             <div className="flex flex-col justify-center h-full">
               <div className="flex items-center gap-4 mb-2">
-                <motion.div 
+                <motion.div
                   className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
-                  <Plus className="text-green-600" size={24} />
+                  <Package className="text-green-600" size={24} />
                 </motion.div>
                 <div>
-                  <h4 className="font-semibold text-base text-ss-text">Add Event</h4>
-                  <p className="text-sm text-ss-subtle">Football/Festival</p>
+                  <h4 className="font-semibold text-base text-ss-text">Recommendations</h4>
+                  <p className="text-sm text-ss-subtle">{recommendations.length} total items</p>
                 </div>
               </div>
             </div>
           </Card>
 
           {/* Weather Impact Card */}
-          <Card className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group">
+          <Card className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group" onClick={scrollToWeather}>
             <div className="flex flex-col justify-center h-full">
               <div className="flex items-center gap-4 mb-2">
-                <motion.div 
+                <motion.div
                   className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center"
                   whileHover={{ scale: 1.1, y: -2 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -292,33 +326,36 @@ export const Dashboard: React.FC = () => {
             </div>
           </Card>
 
-          {/* Bulk Approvals Card */}
-          <Card className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group">
+          {/* New Combos Card */}
+          <Card
+            className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group"
+            onClick={scrollToBundles}
+          >
             <div className="flex flex-col justify-center h-full">
               <div className="flex items-center gap-4 mb-2">
-                <motion.div 
+                <motion.div
                   className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center"
                   whileHover={{ scale: 1.1, rotate: -5 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
-                  <Package className="text-purple-600" size={24} />
+                  <Star className="text-purple-600" size={24} />
                 </motion.div>
                 <div>
-                  <h4 className="font-semibold text-base text-ss-text">Bulk Actions</h4>
-                  <p className="text-sm text-ss-subtle">Quick approve</p>
+                  <h4 className="font-semibold text-base text-ss-text">New Combos</h4>
+                  <p className="text-sm text-ss-subtle">{bundles.length} active bundles</p>
                 </div>
               </div>
             </div>
           </Card>
 
           {/* Best Sellers Card */}
-          <Card 
+          <Card
             className="h-32 p-4 hover:shadow-lg transition-all cursor-pointer group"
             onClick={() => setIsBestSellersModalOpen(true)}
           >
             <div className="flex flex-col justify-center h-full">
               <div className="flex items-center gap-4 mb-2">
-                <motion.div 
+                <motion.div
                   className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center"
                   whileHover={{ scale: 1.15, rotate: 10 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -352,6 +389,7 @@ export const Dashboard: React.FC = () => {
 
             {/* AI Recommendations - Single Card with Pagination */}
             <motion.div
+              id="stock-recommendations"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
@@ -359,7 +397,7 @@ export const Dashboard: React.FC = () => {
               <Card className="p-4">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-semibold text-ss-text">
-                    AI Recommendations
+                    Stock Recommendations
                   </h2>
                   <div className="flex items-center gap-2">
                     <Button
@@ -381,7 +419,7 @@ export const Dashboard: React.FC = () => {
                 </div>
 
                 {/* Single Recommendation Card */}
-                {recommendations.length > 0 && (
+                {nonWeatherRecommendations.length > 0 && (
                   <div className="mb-4">
                     <motion.div
                       key={currentRecommendationIndex}
@@ -390,11 +428,11 @@ export const Dashboard: React.FC = () => {
                       transition={{ duration: 0.3 }}
                     >
                       <RecommendationCard
-                        recommendation={recommendations[currentRecommendationIndex]}
+                        recommendation={nonWeatherRecommendations[currentRecommendationIndex % nonWeatherRecommendations.length]}
                         onApprove={approveRecommendation}
                         onReject={rejectRecommendation}
                         onDefer={deferRecommendation}
-                        isSelected={selectedRecommendations.includes(recommendations[currentRecommendationIndex]?.id)}
+                        isSelected={selectedRecommendations.includes(nonWeatherRecommendations[currentRecommendationIndex % nonWeatherRecommendations.length]?.id)}
                         onSelect={toggleRecommendationSelection}
                       />
                     </motion.div>
@@ -404,17 +442,17 @@ export const Dashboard: React.FC = () => {
                 {/* Pagination Controls */}
                 <div className="flex items-center justify-between">
                   <div className="text-sm text-ss-subtle">
-                    {recommendations.length > 0 ? (
-                      <>Recommendation {currentRecommendationIndex + 1} of {recommendations.length}</>
+                    {nonWeatherRecommendations.length > 0 ? (
+                      <>Recommendation {(currentRecommendationIndex % nonWeatherRecommendations.length) + 1} of {nonWeatherRecommendations.length}</>
                     ) : (
                       'No recommendations available'
                     )}
                   </div>
 
-                  {recommendations.length > 1 && (
+                  {nonWeatherRecommendations.length > 1 && (
                     <Pagination
-                      currentIndex={currentRecommendationIndex}
-                      totalItems={recommendations.length}
+                      currentIndex={currentRecommendationIndex % nonWeatherRecommendations.length}
+                      totalItems={nonWeatherRecommendations.length}
                       onPrevious={previousRecommendation}
                       onNext={nextRecommendation}
                       onSelect={(index) => useDashboardStore.getState().setRecommendationIndex(index)}
@@ -426,8 +464,15 @@ export const Dashboard: React.FC = () => {
             </motion.div>
 
             {/* Current Promotions & Bundles */}
-            <Card className="p-4 flex-1">
-              <h3 className="font-semibold text-ss-text mb-4">Current Promotions & Bundles</h3>
+            <motion.div
+              className="flex-1"
+              animate={{
+                backgroundColor: highlightBundles ? 'rgba(168, 85, 247, 0.1)' : 'transparent',
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card id="current-bundles" className="p-4">
+                <h3 className="font-semibold text-ss-text mb-4">Current Promotions & Bundles</h3>
               <div className="space-y-3">
                 {bundles.filter(b => b.active).map((bundle) => (
                   <div
@@ -445,13 +490,14 @@ export const Dashboard: React.FC = () => {
                         +{bundle.projectedUplift}%
                       </p>
                       <p className="text-xs text-ss-subtle">
-                        {Math.round(bundle.attachRate * 100)}% attach
+                        ${bundle.potentialRevenueLift || bundle.projectedUplift} revenue lift
                       </p>
                     </div>
                   </div>
                 ))}
               </div>
-            </Card>
+              </Card>
+            </motion.div>
           </div>
 
           {/* Right Column: Side Content (col-4) */}
@@ -479,9 +525,16 @@ export const Dashboard: React.FC = () => {
             </Card>
 
             {/* Weather Impact Panel */}
-            <div className="flex-1">
+            <motion.div
+              id="weather-impact"
+              className="flex-1"
+              animate={{
+                backgroundColor: highlightWeather ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
+              }}
+              transition={{ duration: 0.3 }}
+            >
               <WeatherImpactPanel weather={weatherImpact} />
-            </div>
+            </motion.div>
           </div>
         </div>
 
