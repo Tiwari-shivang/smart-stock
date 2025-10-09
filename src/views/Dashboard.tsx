@@ -225,7 +225,7 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <DashboardLayout activeTab={activeTab} onTabChange={setActiveTab}>
+    <DashboardLayout activeTab="overview">
       <DashboardGrid>
         {/* A1: Greeting & Summary with KPI Tiles */}
         <DashboardSections.GreetingSummary>
@@ -487,9 +487,6 @@ export const Dashboard: React.FC = () => {
                     </div>
                     <div className="text-right">
                       <p className="font-semibold text-green-600">
-                        +{bundle.projectedUplift}%
-                      </p>
-                      <p className="text-xs text-ss-subtle">
                         ${bundle.potentialRevenueLift || bundle.projectedUplift} revenue lift
                       </p>
                     </div>

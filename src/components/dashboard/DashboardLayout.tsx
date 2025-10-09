@@ -1,6 +1,7 @@
 import React from 'react';
 import { clsx } from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   Package,
@@ -26,16 +27,39 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   activeTab = 'overview',
   onTabChange
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = React.useState(false);
   const [isSalesforceEnabled, setIsSalesforceEnabled] = React.useState(true);
   const [isGPTEnabled, setIsGPTEnabled] = React.useState(true);
 
+  // Determine active tab from location
+  const currentTab = React.useMemo(() => {
+    if (activeTab) return activeTab;
+    if (location.pathname === '/inventory') return 'inventory';
+    return 'overview';
+  }, [activeTab, location.pathname]);
+
   const navigationTabs: TabItem[] = [
     { key: 'overview', label: 'Overview', icon: <LayoutDashboard size={18} /> },
     { key: 'inventory', label: 'Inventory', icon: <Package size={18} />, badge: '23' }
   ];
+
+  // Handle tab navigation
+  const handleTabChange = (tab: string) => {
+    if (onTabChange) {
+      onTabChange(tab);
+    } else {
+      // Use React Router navigation
+      if (tab === 'inventory') {
+        navigate('/inventory');
+      } else {
+        navigate('/');
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-ss-bg transition-colors duration-300">
@@ -64,7 +88,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                 </div>
                 <div>
                   <h1 className="font-bold text-xl text-ss-text">SmartStock</h1>
-                  <p className="text-xs text-ss-subtle hidden lg:block">7-Eleven Inventory AI</p>
+                  <p className="text-xs text-ss-subtle hidden lg:block">7-Eleven Inventory</p>
                 </div>
               </div>
 
@@ -72,8 +96,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
               <nav className="hidden lg:block">
                 <Tabs
                   items={navigationTabs}
-                  value={activeTab}
-                  onChange={onTabChange}
+                  value={currentTab}
+                  onChange={handleTabChange}
                   variant="default"
                 />
               </nav>
@@ -144,12 +168,12 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                 <button
                   key={tab.key}
                   onClick={() => {
-                    onTabChange?.(tab.key);
+                    handleTabChange(tab.key);
                     setIsMobileMenuOpen(false);
                   }}
                   className={clsx(
                     'w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors',
-                    activeTab === tab.key
+                    currentTab === tab.key
                       ? 'bg-ss-primary text-white'
                       : 'hover:bg-ss-muted text-ss-text'
                   )}

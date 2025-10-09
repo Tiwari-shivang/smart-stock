@@ -580,6 +580,17 @@ export const mockBundles: Bundle[] = [
     price: 9.50,
     discount: 15,
     description: 'Cook at home during the rain! Complete meal kit with cleanup essentials. Save $1.70!'
+  },
+  {
+    id: 'bundle-003',
+    name: 'Weather Protection Bundle',
+    items: ['Raincoat', 'Umbrella - Compact'],
+    potentialRevenueLift: 42,
+    projectedUplift: 42,
+    active: true,
+    price: 22.00,
+    discount: 15,
+    description: 'Stay completely dry during heavy rain! Essential weather protection combo. Save $3.90!'
   }
 ];
 
@@ -675,19 +686,17 @@ export const mockKPITiles: KPITile[] = [
     tooltip: 'Total revenue for current day'
   },
   {
-    title: 'Waste Reduction',
-    value: '23.8%',
-    delta: 5.2,
-    deltaType: 'increase',
-    sparklineData: [18, 19, 20, 21, 22, 24],
+    title: 'Stock Out Risk',
+    value: '2.3%',
+    delta: -0.5,
+    deltaType: 'decrease',
+    sparklineData: [3.2, 2.8, 2.6, 2.5, 2.4, 2.3],
     unit: '%',
-    tooltip: 'Percentage reduction in product waste'
+    tooltip: 'Percentage of items at risk of stock out'
   },
   {
     title: 'Slow moving items',
     value: '5',
-    delta: -1,
-    deltaType: 'decrease',
     sparklineData: [8, 7, 6, 6, 5, 5],
     tooltip: 'Number of slow moving items in inventory'
   },

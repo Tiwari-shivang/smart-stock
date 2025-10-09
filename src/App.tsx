@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Dashboard } from '@/views/Dashboard';
 import { Login } from '@/views/Login';
+import { Inventory } from '@/views/Inventory';
 import { useDashboardStore } from '@/store/dashboardStore';
 
 const queryClient = new QueryClient({
@@ -55,6 +56,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Dashboard />} />
+            <Route path="/inventory" element={<Inventory />} />
           </Routes>
         </Router>
       </div>

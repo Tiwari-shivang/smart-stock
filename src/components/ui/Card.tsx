@@ -11,6 +11,7 @@ interface CardProps {
   radius?: 'sm' | 'md' | 'lg';
   padding?: 'none' | 'sm' | 'md' | 'lg';
   onClick?: () => void;
+  id?: string;
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -21,7 +22,8 @@ export const Card: React.FC<CardProps> = ({
   elevation = 'md',
   radius = 'md',
   padding = 'md',
-  onClick
+  onClick,
+  id
 }) => {
   const elevationClasses = {
     sm: 'shadow-ss-sm',
@@ -50,6 +52,7 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <Component
+      id={id}
       className={clsx(
         'panel',
         elevationClasses[elevation],
