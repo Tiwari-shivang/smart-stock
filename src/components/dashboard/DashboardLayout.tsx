@@ -34,6 +34,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   const [isSettingsDrawerOpen, setIsSettingsDrawerOpen] = React.useState(false);
   const [isSalesforceEnabled, setIsSalesforceEnabled] = React.useState(true);
   const [isGPTEnabled, setIsGPTEnabled] = React.useState(true);
+  const [isDatabricksEnabled, setIsDatabricksEnabled] = React.useState(true);
+  const [isWeatherAPIEnabled, setIsWeatherAPIEnabled] = React.useState(true);
 
   // Determine active tab from location
   const currentTab = React.useMemo(() => {
@@ -367,6 +369,110 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
                             <div className="flex items-center gap-2 text-xs text-ss-subtle">
                               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                               <span>AI recommendations enabled</span>
+                            </div>
+                          </motion.div>
+                        )}
+                      </div>
+
+                      {/* Databricks Toggle */}
+                      <div className="bg-ss-bg rounded-xl p-4 border border-ss-line hover:border-ss-primary/30 transition-colors">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="p-3 bg-orange-500/10 rounded-lg">
+                              <svg
+                                className="w-6 h-6 text-orange-500"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                              >
+                                <path d="M.95 14.184L12 20.403l9.919-5.55v2.21L12 22.662l-10.484-5.96-.565.308v-2.826zm0-4.105L12 16.298l9.919-5.55v2.21L12 18.557l-10.484-5.96-.565.308V9.079zm11.05 2.21l-10.485-5.96L12 .37l11.05 6.268L12 12.29z" />
+                              </svg>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-ss-text">Databricks</h4>
+                              <p className="text-xs text-ss-subtle mt-1">
+                                {isDatabricksEnabled ? 'Connected' : 'Disconnected'}
+                              </p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => setIsDatabricksEnabled(!isDatabricksEnabled)}
+                            className={clsx(
+                              'relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-ss-primary focus:ring-offset-2',
+                              isDatabricksEnabled ? 'bg-ss-primary' : 'bg-ss-muted'
+                            )}
+                          >
+                            <span
+                              className={clsx(
+                                'inline-block h-5 w-5 transform rounded-full bg-white shadow-lg transition-transform',
+                                isDatabricksEnabled ? 'translate-x-6' : 'translate-x-1'
+                              )}
+                            />
+                          </button>
+                        </div>
+                        {isDatabricksEnabled && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="mt-4 pt-4 border-t border-ss-line"
+                          >
+                            <div className="flex items-center gap-2 text-xs text-ss-subtle">
+                              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                              <span>Analytics pipeline active</span>
+                            </div>
+                          </motion.div>
+                        )}
+                      </div>
+
+                      {/* Weather API Toggle */}
+                      <div className="bg-ss-bg rounded-xl p-4 border border-ss-line hover:border-ss-primary/30 transition-colors">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="p-3 bg-cyan-500/10 rounded-lg">
+                              <svg
+                                className="w-6 h-6 text-cyan-500"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+                              </svg>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-ss-text">Weather API</h4>
+                              <p className="text-xs text-ss-subtle mt-1">
+                                {isWeatherAPIEnabled ? 'Active' : 'Inactive'}
+                              </p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => setIsWeatherAPIEnabled(!isWeatherAPIEnabled)}
+                            className={clsx(
+                              'relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-ss-primary focus:ring-offset-2',
+                              isWeatherAPIEnabled ? 'bg-ss-primary' : 'bg-ss-muted'
+                            )}
+                          >
+                            <span
+                              className={clsx(
+                                'inline-block h-5 w-5 transform rounded-full bg-white shadow-lg transition-transform',
+                                isWeatherAPIEnabled ? 'translate-x-6' : 'translate-x-1'
+                              )}
+                            />
+                          </button>
+                        </div>
+                        {isWeatherAPIEnabled && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="mt-4 pt-4 border-t border-ss-line"
+                          >
+                            <div className="flex items-center gap-2 text-xs text-ss-subtle">
+                              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                              <span>Real-time weather tracking</span>
                             </div>
                           </motion.div>
                         )}

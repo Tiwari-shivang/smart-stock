@@ -117,7 +117,7 @@ export const WeatherImpactPanel: React.FC<WeatherImpactPanelProps> = ({
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.05 }}
-              className="flex items-center gap-2 p-2 bg-white dark:bg-gray-800 rounded-lg hover:shadow-sm transition-shadow"
+              className="flex items-center gap-2 p-2 bg-gray-800 rounded-lg hover:shadow-sm transition-shadow"
             >
               <TrendingUp size={12} className="text-green-500" />
               <span className="text-xs text-white text-ss-text">{product}</span>
